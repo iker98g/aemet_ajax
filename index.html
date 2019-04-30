@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="style.css"></script>
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="prueba"></div>
+    <div class="container">
+        <div class="row">
+            <h1>Datos extraidos de la <a target="_blank" href="https://opendata.aemet.es/centrodedescargas/inicio">API de AEMET</a></h1>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="card-deck">
+                    <div id="mapas" class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Muestran la configuración de la presión en superficie usando isobaras</h5>
+                            <p class="card-text"></p>
+                            <a href="#" target="_blank" class="btn btn-primary">Ver JSON metadatos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>                
+    <script>
+        
+        $(document).ready(function () {
+            //var settings = {
+                //"async": true,
+                //"crossDomain": true,
+                //"url": "https://opendata.aemet.es/opendata/api/maestro/municipios?api_key=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJpa2VyOThnQGdtYWlsLmNvbSIsImp0aSI6ImJmNGMzNGFhLTQ3MTYtNGYwYy1iMWVhLTlkZDNiZTZlMzkxMCIsImlzcyI6IkFFTUVUIiwiaWF0IjoxNTU2NTIwMTE2LCJ1c2VySWQiOiJiZjRjMzRhYS00NzE2LTRmMGMtYjFlYS05ZGQzYmU2ZTM5MTAiLCJyb2xlIjoiIn0.F6a1etZs2qyOYfKuQCC_SELLLwqjbL98PwvYc62OSTo",
+                //"method": "GET",
+                //"headers": {
+                //"cache-control": "no-cache"
+                //}
+            //}
+
+            //$.ajax(settings).done(function (response) {
+            //console.log(response);
+            //$('#prueba').html(response)
+            //});
+
+            $.getJSON("https://opendata.aemet.es/opendata/api/incendios/mapasriesgo/estimado/area/p/?api_key=" + apiKey, function (respuesta) {
+                console.log(respuesta);
+
+                $('#riesgo-incendios > img').attr('src', respuesta.datos);
+                $('#riesgo-incendios a').attr('href', respuesta.metadatos);
+
+            $.getJSON(respuesta.metadatos, function(metadatos){
+                $('#riesgo-incendios .card-text').html(metadatos.descripción);
+        });
+    });
+        });
+
+        
+    </script>
+</body>
+</html>
